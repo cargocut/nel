@@ -22,4 +22,13 @@ let from_list_exn list =
   | Some x -> x
 ;;
 
+let length (_ :: xs) = 1 + List.length xs
 let to_list (x :: xs) = List.cons x xs
+
+let is_singleton = function
+  | _ :: [] -> true
+  | _ :: _ -> false
+;;
+
+let hd (x :: _) = x
+let tl (_ :: x) = x
