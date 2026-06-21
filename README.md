@@ -8,7 +8,8 @@
 > A very simple implementation of a non-empty list.
 
 Until non-empty lists are included in the standard library, this
-rather naive implementation should do the trick.
+rather naive implementation should do the trick. Currently the goal of
+the API **is not to be complete** but to follow our current usages.
 
 **Why not using**
 [ocaml-non-empty-list](https://github.com/johnyob/ocaml-non-empty-list)?
