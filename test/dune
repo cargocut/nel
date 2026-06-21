@@ -1,0 +1,3 @@
+(test
+ (name nel_test)
+ (libraries alcotest nel))
