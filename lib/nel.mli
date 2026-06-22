@@ -173,6 +173,39 @@ val mem : 'a -> 'a t -> bool
 (** [memq x nel] is [for_some ((==) x) nel]. *)
 val memq : 'a -> 'a t -> bool
 
+(** {1 Searching} *)
+
+(** [find pred nel] returns the first element of the given [nel] that
+    satisfy the given predicate [pred]. *)
+val find : ('a -> bool) -> 'a t -> 'a option
+
+(** See {!val:find} but the function is applied to the index of the element
+    as first argument (counting from 0), and the element itself as
+    second argument. *)
+val findi : (int -> 'a -> bool) -> 'a t -> 'a option
+
+(** [find_index pred nel] returns [Some i], where [i] is the index of the
+    first element of the non-empty list [nel] that satisfies [pred x],
+    if there is such an element. It returns [None] if there is no such
+    element. *)
+val find_index : ('a -> bool) -> 'a t -> int option
+
+(* NOTE: we do not need [find_indexi] because of [find_mapi]. *)
+
+(** [find_map pred nel] applies [pred] to the elements of [nel] in order,
+    and returns the first result of the form [Some v], or [None]
+    if none exist. *)
+val find_map : ('a -> 'b option) -> 'a t -> 'b option
+
+(** See {!val:find_map} but the function is applied to the index of the element
+    as first argument (counting from 0), and the element itself as
+    second argument. *)
+val find_mapi : (int -> 'a -> 'b option) -> 'a t -> 'b option
+
+(* NEXT: For the moment, for filtering/droping/taking I suggest to use
+   [to_list] and relay on [Stdlib.List]. Since the function returns
+   regular lists. *)
+
 (** {1 Comparison} *)
 
 (** Equality between non-empty lists. *)

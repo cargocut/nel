@@ -12,5 +12,6 @@ let () =
     ; Nel_iter_test.cases
     ; Nel_fold_test.cases
     ; Nel_scanning_test.cases
+    ; Nel_searching_test.cases
     ]
 ;;

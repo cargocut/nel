@@ -138,6 +138,32 @@ let for_some pred (x :: xs) = pred x || List.exists pred xs
 let exists = for_some
 let mem x = for_some (( = ) x)
 let memq x = for_some (( == ) x)
+let find pred (x :: xs) = if pred x then Some x else List.find_opt pred xs
+
+let find_map pred (x :: xs) =
+  let rec aux = function
+    | List.[] -> None
+    | List.(x :: xs) ->
+      (match pred x with
+       | None -> aux xs
+       | Some x -> Some x)
+  in
+  aux List.(x :: xs)
+;;
+
+let find_mapi pred (x :: xs) =
+  let rec aux n = function
+    | List.[] -> None
+    | List.(x :: xs) ->
+      (match pred n x with
+       | None -> aux (n + 1) xs
+       | Some x -> Some x)
+  in
+  aux 0 List.(x :: xs)
+;;
+
+let findi pred = find_mapi (fun i x -> if pred i x then Some x else None)
+let find_index pred = find_mapi (fun i x -> if pred x then Some i else None)
 let equal eq (x :: xs) (y :: ys) = eq x y && List.equal eq xs ys
 
 let compare cmp (x :: xs) (y :: ys) =
