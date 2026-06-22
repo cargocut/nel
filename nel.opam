@@ -20,7 +20,7 @@ homepage: "https://github.com/cargocut/nel"
 bug-reports: "https://github.com/cargocut/nel/issues"
 depends: [
   "dune" {>= "3.0"}
-  "ocaml" {>= "4.10.0"}
+  "ocaml" {>= "4.12.0"}
   "alcotest" {with-test & >= "1.9.1"}
   "utop" {with-dev-setup}
   "ocamlformat" {with-dev-setup}
