@@ -21,6 +21,14 @@ type 'a t = ( :: ) of 'a * 'a list
 (** [make x xs] constructs a non-empty list with a head and a tail. *)
 val make : 'a -> 'a list -> 'a t
 
+(** [init len f] is [[f 0; f 1; ...; f (len-1)]], evaluated left to right.
+    Return [None] if the given [len] is [< 1]. *)
+val init : int -> (int -> 'a) -> 'a t option
+
+(** Same of {!val:init} but raises [Invalid_argument "Nel.init_exn"] if
+    the given [len] is [< 1].*)
+val init_exn : int -> (int -> 'a) -> 'a t
+
 (** [singleton x] constructs a non-empty list with just one element, [x]. *)
 val singleton : 'a -> 'a t
 
@@ -60,6 +68,20 @@ val tl : 'a t -> 'a list
 
 (** Equality between non-empty lists. *)
 val equal : ('a -> 'a -> bool) -> 'a t -> 'a t -> bool
+
+(** Comparison between non-empty lists. Use the same lexicographic
+    heuristics than {!val:Stdlib.List.compare}. *)
+val compare : ('a -> 'a -> int) -> 'a t -> 'a t -> int
+
+(** Compare the lengths of two lists. [compare_lengths l1 l2] is
+    equivalent to [compare (length l1) (length l2)], except that the
+    computation stops after reaching the end of the shortest list. *)
+val compare_lengths : 'a t -> 'a t -> int
+
+(** Compare the length of a list to an integer.  [compare_length_with l len]
+    is equivalent to [compare (length l) len], except that the
+    computation stops after at most [len] iterations on the list. *)
+val compare_length_with : 'a t -> int -> int
 
 (** {1 Conversion} *)
 

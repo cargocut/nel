@@ -58,8 +58,51 @@ open struct
         expected
         computed)
   ;;
+
+  let init0 =
+    test_case "init" `Quick (fun () ->
+      let expected = Some Nel.(0 :: 1 :: 2 :: [ 3 ])
+      and computed = Nel.init 4 (fun x -> x) in
+      check
+        (option @@ Nel_util.testable int)
+        "When the list is empty, [from_list] shoudl fail (return [None])"
+        expected
+        computed)
+  ;;
+
+  let init1 =
+    test_case "init" `Quick (fun () ->
+      let expected = None
+      and computed = Nel.init 0 (fun x -> x) in
+      check
+        (option @@ Nel_util.testable int)
+        "When the list is empty, [from_list] shoudl fail (return [None])"
+        expected
+        computed)
+  ;;
+
+  let init2 =
+    test_case "init" `Quick (fun () ->
+      let expected = Some (Nel.singleton 1)
+      and computed = Nel.init 1 (fun x -> succ x) in
+      check
+        (option @@ Nel_util.testable int)
+        "When the list is empty, [from_list] shoudl fail (return [None])"
+        expected
+        computed)
+  ;;
 end
 
 let cases =
-  "Building", [ make0; singleton0; cons0; cons1; from_list0; from_list1 ]
+  ( "Building"
+  , [ make0
+    ; singleton0
+    ; cons0
+    ; cons1
+    ; from_list0
+    ; from_list1
+    ; init0
+    ; init1
+    ; init2
+    ] )
 ;;
