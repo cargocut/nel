@@ -133,6 +133,11 @@ let concat_mapi f nel =
 let fold_left f default (x :: xs) = List.fold_left f (f default x) xs
 let fold_right f (x :: xs) default = f x (List.fold_right f xs default)
 let reduce f (x :: xs) = List.fold_left f x xs
+let for_all pred (x :: xs) = pred x && List.for_all pred xs
+let for_some pred (x :: xs) = pred x || List.exists pred xs
+let exists = for_some
+let mem x = for_some (( = ) x)
+let memq x = for_some (( == ) x)
 let equal eq (x :: xs) (y :: ys) = eq x y && List.equal eq xs ys
 
 let compare cmp (x :: xs) (y :: ys) =

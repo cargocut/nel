@@ -154,6 +154,25 @@ val reduce : ('a -> 'a -> 'a) -> 'a t -> 'a
 (* NOTE: I did not include [fold_lefti] and [fold_righti] because it can
    be implemented using [fold_left|right] easili. *)
 
+(** {1 Scanning} *)
+
+(** [for_all pred nel] return [true] if all element of the given [nel]
+    satisfy [pred]. [false] otherwise. *)
+val for_all : ('a -> bool) -> 'a t -> bool
+
+(** [for_some pred nel] return [true] if at least one element of the given [nel]
+    satisfy [pred]. [false] otherwise. *)
+val for_some : ('a -> bool) -> 'a t -> bool
+
+(** [exists pred nel] is [for_some pred nel], see {!val:for_some}. *)
+val exists : ('a -> bool) -> 'a t -> bool
+
+(** [mem x nel] is [for_some ((=) x) nel]. *)
+val mem : 'a -> 'a t -> bool
+
+(** [memq x nel] is [for_some ((==) x) nel]. *)
+val memq : 'a -> 'a t -> bool
+
 (** {1 Comparison} *)
 
 (** Equality between non-empty lists. *)
