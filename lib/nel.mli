@@ -212,7 +212,7 @@ val find_mapi : (int -> 'a -> 'b option) -> 'a t -> 'b option
 val equal : ('a -> 'a -> bool) -> 'a t -> 'a t -> bool
 
 (** Comparison between non-empty lists. Use the same lexicographic
-    heuristics than {!val:Stdlib.List.compare}. *)
+    heuristics than [Stdlib.List.compare]. *)
 val compare : ('a -> 'a -> int) -> 'a t -> 'a t -> int
 
 (** Compare the lengths of two lists. [compare_lengths l1 l2] is
