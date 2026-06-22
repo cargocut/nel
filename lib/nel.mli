@@ -26,14 +26,11 @@ val make : 'a -> 'a list -> 'a t
 val init : int -> (int -> 'a) -> 'a t option
 
 (** Same of {!val:init} but raises [Invalid_argument "Nel.init_exn"] if
-    the given [len] is [< 1].*)
+    the given [len] is [< 1]. *)
 val init_exn : int -> (int -> 'a) -> 'a t
 
 (** [singleton x] constructs a non-empty list with just one element, [x]. *)
 val singleton : 'a -> 'a t
-
-(** [cons x nel] is [x :: nel]. *)
-val cons : 'a -> 'a t -> 'a t
 
 (** [from_list tl] attempts to convert a list into a non-empty
     list. Return [None] if the given list [tl] is empty. *)
@@ -63,6 +60,34 @@ val hd : 'a t -> 'a
     the list can be a singleton, the tail is returned as a list (and
     not a non-empty list). *)
 val tl : 'a t -> 'a list
+
+(** [last nel] retun the latest element of the given [nel]. Since the list
+    cannot be empty, the function is total. *)
+val last : 'a t -> 'a
+
+(** Return the [n]-th element of the given list. The first element (head
+    of the list) is at position 0. If the result does not exits, it
+    return [None]. *)
+val nth : 'a t -> int -> 'a option
+
+(** Same of {!val:nth} but raises [Invalid_argument "Nel.nth_exn"] if the
+    given [n] is [< 1] and [Failure] if the index does not exists. *)
+val nth_exn : 'a t -> int -> 'a
+
+(** {1 Manipulation} *)
+
+(** [cons x nel] is [x :: nel]. *)
+val cons : 'a -> 'a t -> 'a t
+
+(** Non Empty List reversal. *)
+val rev : 'a t -> 'a t
+
+(** [append nel1 nel2] appends [nel2] to [nel1]. *)
+val append : 'a t -> 'a t -> 'a t
+
+(** [rev_append nel1 nel2] reverses [nel1] and concatenates it with [nel2].
+    This is equivalent to [append (rev nel1) nel2]. *)
+val rev_append : 'a t -> 'a t -> 'a t
 
 (** {1 Comparison} *)
 

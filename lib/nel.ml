@@ -26,6 +26,22 @@ let init_exn len f =
   | Some x -> x
 ;;
 
+let nth (x :: xs) n =
+  if n < 0
+  then None
+  else if Int.equal n 0
+  then Some x
+  else List.nth_opt xs (n - 1)
+;;
+
+let nth_exn (x :: xs) n =
+  if n < 0
+  then raise (Invalid_argument "Nel.nth_exn")
+  else if Int.equal n 0
+  then x
+  else List.nth xs (n - 1)
+;;
+
 let from_list list =
   let open List in
   match list with
@@ -49,6 +65,24 @@ let is_singleton = function
 
 let hd (x :: _) = x
 let tl (_ :: x) = x
+
+let rec last nel =
+  match nel with
+  | [ latest ] -> latest
+  | _ :: x :: xs -> last (x :: xs)
+;;
+
+let rev_append_to_list (x :: xs) l2 =
+  let rec aux acc first = function
+    | List.[] -> first :: acc
+    | List.(x :: xs) -> aux (first :: acc) x xs
+  in
+  aux l2 x xs
+;;
+
+let rev_append nel nel2 = rev_append_to_list nel (to_list nel2)
+let rev nel = rev_append_to_list nel []
+let append (x :: xs) (y :: ys) = make x (xs @ List.(y :: ys))
 let equal eq (x :: xs) (y :: ys) = eq x y && List.equal eq xs ys
 
 let compare cmp (x :: xs) (y :: ys) =

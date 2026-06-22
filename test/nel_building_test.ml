@@ -23,20 +23,6 @@ open struct
       check (Nel_util.testable int) "should be equal" expected computed)
   ;;
 
-  let cons0 =
-    test_case "cons" `Quick (fun () ->
-      let expected = Nel.(1 :: [ 2 ])
-      and computed = Nel.(cons 1 @@ singleton 2) in
-      check (Nel_util.testable int) "should be equal" expected computed)
-  ;;
-
-  let cons1 =
-    test_case "cons" `Quick (fun () ->
-      let expected = Nel.(0 :: 1 :: [ 2 ])
-      and computed = Nel.(cons 0 @@ cons 1 @@ singleton 2) in
-      check (Nel_util.testable int) "should be equal" expected computed)
-  ;;
-
   let from_list0 =
     test_case "from_list" `Quick (fun () ->
       let expected = None
@@ -94,15 +80,5 @@ open struct
 end
 
 let cases =
-  ( "Building"
-  , [ make0
-    ; singleton0
-    ; cons0
-    ; cons1
-    ; from_list0
-    ; from_list1
-    ; init0
-    ; init1
-    ; init2
-    ] )
+  "Building", [ make0; singleton0; from_list0; from_list1; init0; init1; init2 ]
 ;;

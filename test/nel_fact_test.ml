@@ -189,6 +189,55 @@ open struct
       and computed = Nel.compare_length_with Nel.(singleton 1) (-2) in
       check int "should be equal" expected computed)
   ;;
+
+  let nth0 =
+    test_case "nth" `Quick (fun () ->
+      let expected = Some 5
+      and computed = Nel.nth Nel.(5 :: []) 0 in
+      check (option int) "should be equal" expected computed)
+  ;;
+
+  let nth1 =
+    test_case "nth" `Quick (fun () ->
+      let expected = Some 4
+      and computed = Nel.nth Nel.(5 :: [ 2; 2; 3; 4 ]) 4 in
+      check (option int) "should be equal" expected computed)
+  ;;
+
+  let nth2 =
+    test_case "nth" `Quick (fun () ->
+      let expected = None
+      and computed = Nel.nth Nel.(5 :: [ 2; 2; 3; 4 ]) 5 in
+      check (option int) "should be equal" expected computed)
+  ;;
+
+  let nth3 =
+    test_case "nth" `Quick (fun () ->
+      let expected = None
+      and computed = Nel.nth Nel.(5 :: [ 2; 2; 3; 4 ]) (-3) in
+      check (option int) "should be equal" expected computed)
+  ;;
+
+  let last0 =
+    test_case "last" `Quick (fun () ->
+      let expected = 1
+      and computed = Nel.singleton 1 |> Nel.last in
+      check int "should be equal" expected computed)
+  ;;
+
+  let last1 =
+    test_case "last" `Quick (fun () ->
+      let expected = 2
+      and computed = Nel.make 1 [ 2 ] |> Nel.last in
+      check int "should be equal" expected computed)
+  ;;
+
+  let last2 =
+    test_case "last" `Quick (fun () ->
+      let expected = 5
+      and computed = Nel.make 1 [ 2; 3; 4; 5 ] |> Nel.last in
+      check int "should be equal" expected computed)
+  ;;
 end
 
 let cases =
@@ -215,5 +264,12 @@ let cases =
     ; compare_length_with3
     ; compare_length_with4
     ; compare_length_with5
+    ; nth0
+    ; nth1
+    ; nth2
+    ; nth3
+    ; last0
+    ; last1
+    ; last2
     ] )
 ;;
