@@ -4,7 +4,9 @@
    SPDX-License-Identifier: BSD-3-Clause *)
 
 (** Describes a non-empty list (usually expressed as [nel] for Non Empty
-    List) (i.e. one containing at least one element). *)
+    List) (i.e. one containing at least one element). Most of the
+    documentation was mostly done by {{:https://ocaml.org} OCaml
+    Standard Library}. *)
 
 (** {1 Types} *)
 
@@ -88,6 +90,42 @@ val append : 'a t -> 'a t -> 'a t
 (** [rev_append nel1 nel2] reverses [nel1] and concatenates it with [nel2].
     This is equivalent to [append (rev nel1) nel2]. *)
 val rev_append : 'a t -> 'a t -> 'a t
+
+(** Concatenate a list of lists. The elements of the argument are all
+    concatenated together (in the same order) to give the result.
+    Not tail-recursive
+    (length of the argument + length of the longest sub-list). *)
+val concat : 'a t t -> 'a t
+
+(** An alias for {!val:concat}. *)
+val flatten : 'a t t -> 'a t
+
+(** {1 Iteration} *)
+
+(** [iter f nel] apply [f] on every element of [nel]. *)
+val iter : ('a -> unit) -> 'a t -> unit
+
+(** Same as {!val:iter} but the function is applied to the index of the
+    element as first argument (counting from 0), and the element
+    itself as second argument. *)
+val iteri : (int -> 'a -> unit) -> 'a t -> unit
+
+(** [map f nel] produce a new non-empty list applying [f] on every element
+    of [nel]. *)
+val map : ('a -> 'b) -> 'a t -> 'b t
+
+(** See {!val:map} but the function is applied to the index of the element
+    as first argument (counting from 0), and the element itself as
+    second argument. *)
+val mapi : (int -> 'a -> 'b) -> 'a t -> 'b t
+
+(** Same as [rev (map f l)] but more efficient. *)
+val rev_map : ('a -> 'b) -> 'a t -> 'b t
+
+(** See {!val:rev_map} but the function is applied to the index of the element
+    as first argument (counting from 0), and the element itself as
+    second argument. *)
+val rev_mapi : (int -> 'a -> 'b) -> 'a t -> 'b t
 
 (** {1 Comparison} *)
 

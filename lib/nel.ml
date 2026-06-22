@@ -10,6 +10,11 @@ type 'a t = ( :: ) of 'a * 'a list
    well-tested and usable version. Improving performance is therefore
    open to contributions! *)
 
+(* NEXT: The Preface implementation, thanks to @mbarbin, includes more
+   refined optimizations that we might need to adopt someday, but
+   without a benchmark, I'm not convinced it's necessary at this
+   point. See: https://github.com/xvw/preface/pull/191 *)
+
 let make x xs = x :: xs
 let singleton x = make x []
 let cons x (y :: z) = x :: y :: z
@@ -83,6 +88,38 @@ let rev_append_to_list (x :: xs) l2 =
 let rev_append nel nel2 = rev_append_to_list nel (to_list nel2)
 let rev nel = rev_append_to_list nel []
 let append (x :: xs) (y :: ys) = make x (xs @ List.(y :: ys))
+let concat ((x :: xs) :: rest) = x :: (xs @ List.concat_map to_list rest)
+let flatten = concat
+
+let iter f (x :: xs) =
+  f x;
+  List.iter f xs
+;;
+
+let iteri f (x :: xs) =
+  f 0 x;
+  List.iteri (fun i x -> f (i + 1) x) xs
+;;
+
+let map f (x :: xs) = f x :: List.map f xs
+let mapi f (x :: xs) = f 0 x :: List.mapi (fun i x -> f (i + 1) x) xs
+
+let rev_map f (x :: xs) =
+  let rec aux acc first = function
+    | List.[] -> first :: acc
+    | List.(x :: xs) -> aux (first :: acc) (f x) xs
+  in
+  aux [] (f x) xs
+;;
+
+let rev_mapi f (x :: xs) =
+  let rec aux acc first n = function
+    | List.[] -> first :: acc
+    | List.(x :: xs) -> aux (first :: acc) (f n x) (n + 1) xs
+  in
+  aux [] (f 0 x) 1 xs
+;;
+
 let equal eq (x :: xs) (y :: ys) = eq x y && List.equal eq xs ys
 
 let compare cmp (x :: xs) (y :: ys) =

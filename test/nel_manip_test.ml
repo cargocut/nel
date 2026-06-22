@@ -80,6 +80,20 @@ open struct
       and computed = Nel.rev_append Nel.(make 1 [ 2 ]) Nel.(make 3 [ 4; 5 ]) in
       check (Nel_util.testable int) "should be equal" expected computed)
   ;;
+
+  let concat0 =
+    test_case "concat" `Quick (fun () ->
+      let expected = Nel.singleton 1
+      and computed = Nel.singleton (Nel.singleton 1) |> Nel.concat in
+      check (Nel_util.testable int) "should be equal" expected computed)
+  ;;
+
+  let concat1 =
+    test_case "concat" `Quick (fun () ->
+      let expected = Nel.make 1 [ 2; 3; 4; 5 ]
+      and computed = Nel.singleton (Nel.make 1 [ 2; 3; 4; 5 ]) |> Nel.concat in
+      check (Nel_util.testable int) "should be equal" expected computed)
+  ;;
 end
 
 let cases =
@@ -94,5 +108,7 @@ let cases =
     ; rev_append0
     ; rev_append1
     ; rev_append2
+    ; concat0
+    ; concat1
     ] )
 ;;

@@ -21,7 +21,7 @@
  (synopsis "A very simple implementation of a non-empty list")
  (description "A very simple implementation of a non-empty list")
  (depends
- (ocaml (>= 4.08.0))
+ (ocaml (>= 4.10.0))
  (alcotest (and :with-test (>= 1.9.1)))
  ;; dev setup
  (utop :with-dev-setup)
