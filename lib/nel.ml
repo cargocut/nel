@@ -120,6 +120,19 @@ let rev_mapi f (x :: xs) =
   aux [] (f 0 x) 1 xs
 ;;
 
+let concat_map f nel =
+  (* KLUDGE: Maybe it can be improved. *)
+  concat (map f nel)
+;;
+
+let concat_mapi f nel =
+  (* KLUDGE: Maybe it can be improved. *)
+  concat (mapi f nel)
+;;
+
+let fold_left f default (x :: xs) = List.fold_left f (f default x) xs
+let fold_right f (x :: xs) default = f x (List.fold_right f xs default)
+let reduce f (x :: xs) = List.fold_left f x xs
 let equal eq (x :: xs) (y :: ys) = eq x y && List.equal eq xs ys
 
 let compare cmp (x :: xs) (y :: ys) =
@@ -132,3 +145,6 @@ let compare_lengths (_ :: xs) (_ :: ys) = List.compare_lengths xs ys
 let compare_length_with (_ :: xs) len =
   if len < 1 then 1 else List.compare_length_with xs (len - 1)
 ;;
+
+let return = singleton
+let bind nel f = concat_map f nel

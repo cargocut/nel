@@ -10,5 +10,6 @@ let () =
     ; Nel_fact_test.cases
     ; Nel_manip_test.cases
     ; Nel_iter_test.cases
+    ; Nel_fold_test.cases
     ]
 ;;

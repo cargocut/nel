@@ -127,6 +127,38 @@ open struct
         expected
         computed)
   ;;
+
+  let concat_map0 =
+    test_case "concat_map" `Quick (fun () ->
+      let expected = Nel.make 1 [ 2; 2; 3; 4; 4; 5 ]
+      and computed =
+        Nel.make 1 [ 2; 3; 4; 5 ]
+        |> Nel.concat_map (fun x ->
+          if x mod 2 = 0 then Nel.make x [ x ] else Nel.singleton x)
+      in
+      check (Nel_util.testable int) "should be equal" expected computed)
+  ;;
+
+  let concat_map1 =
+    test_case "concat_map" `Quick (fun () ->
+      let expected = Nel.make 1 [ 2; 3; 4; 5 ]
+      and computed =
+        Nel.singleton 1
+        |> Nel.concat_map (fun x -> Nel.make x [ x + 1; x + 2; x + 3; x + 4 ])
+      in
+      check (Nel_util.testable int) "should be equal" expected computed)
+  ;;
+
+  let concat_map2 =
+    test_case "concat_map" `Quick (fun () ->
+      let expected =
+        Nel.make 1 [ 2; 3; 4; 5; 2; 3; 4; 5; 6; 3; 4; 5; 6; 7; 4; 5; 6; 7; 8 ]
+      and computed =
+        Nel.make 1 [ 2; 3; 4 ]
+        |> Nel.concat_map (fun x -> Nel.make x [ x + 1; x + 2; x + 3; x + 4 ])
+      in
+      check (Nel_util.testable int) "should be equal" expected computed)
+  ;;
 end
 
 let cases =
@@ -143,5 +175,8 @@ let cases =
     ; rev_map1
     ; rev_mapi0
     ; rev_mapi1
+    ; concat_map0
+    ; concat_map1
+    ; concat_map2
     ] )
 ;;

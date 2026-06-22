@@ -34,6 +34,9 @@ val init_exn : int -> (int -> 'a) -> 'a t
 (** [singleton x] constructs a non-empty list with just one element, [x]. *)
 val singleton : 'a -> 'a t
 
+(** [return x] is [singleton x]. See {!val:singleton}. *)
+val return : 'a -> 'a t
+
 (** [from_list tl] attempts to convert a list into a non-empty
     list. Return [None] if the given list [tl] is empty. *)
 val from_list : 'a list -> 'a t option
@@ -126,6 +129,30 @@ val rev_map : ('a -> 'b) -> 'a t -> 'b t
     as first argument (counting from 0), and the element itself as
     second argument. *)
 val rev_mapi : (int -> 'a -> 'b) -> 'a t -> 'b t
+
+(** [concat_map f nel] is [concat (map f nel)]. *)
+val concat_map : ('a -> 'b t) -> 'a t -> 'b t
+
+(** [bind nel f] is [concat_map f nel]. See {!val:concat_map}. *)
+val bind : 'a t -> ('a -> 'b t) -> 'b t
+
+(** See {!val:concat_map} but the function is applied to the index of the element
+    as first argument (counting from 0), and the element itself as
+    second argument. *)
+val concat_mapi : (int -> 'a -> 'b t) -> 'a t -> 'b t
+
+(** [fold_left f init [b1; ...; bn]] is [f (... (f (f init b1) b2) ...) bn]. *)
+val fold_left : ('acc -> 'a -> 'acc) -> 'acc -> 'a t -> 'acc
+
+(** [fold_right f [a1; ...; an] init] is
+    [f a1 (f a2 (... (f an init) ...))]. Not tail-recursive. *)
+val fold_right : ('a -> 'acc -> 'acc) -> 'a t -> 'acc -> 'acc
+
+(** [reduce f nel] is the semigroup reduction over a non-empty list. *)
+val reduce : ('a -> 'a -> 'a) -> 'a t -> 'a
+
+(* NOTE: I did not include [fold_lefti] and [fold_righti] because it can
+   be implemented using [fold_left|right] easili. *)
 
 (** {1 Comparison} *)
 
