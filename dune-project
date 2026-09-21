@@ -4,7 +4,8 @@
 (generate_opam_files)
 
 (source (github cargocut/nel))
-(license MIT)
+(license BSD-3-Clause)
+
 (authors
   "xhtmlboi <xhtmlboi@gmail.com>"
   "xvw <xaviervdw@gmail.com>"
