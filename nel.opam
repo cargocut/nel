@@ -15,7 +15,7 @@ authors: [
   "msp <spawnmick@gmail.com>"
   "grm <grimfw@gmail.com>"
 ]
-license: "MIT"
+license: "BSD-3-Clause"
 homepage: "https://github.com/cargocut/nel"
 bug-reports: "https://github.com/cargocut/nel/issues"
 depends: [
